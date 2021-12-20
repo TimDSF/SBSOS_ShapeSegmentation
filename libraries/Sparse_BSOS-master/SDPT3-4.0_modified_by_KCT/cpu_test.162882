@@ -1,0 +1,40 @@
+MATLAB is selecting SOFTWARE OPENGL rendering.
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2018 The MathWorks, Inc.
+                   R2018a (9.4.0.813654) 64-bit (glnxa64)
+                             February 23, 2018
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> >> >> >> >> >> >> >>     function Installmex(recompile)
+    |
+{Error: Function definition not supported in this context. Create functions in
+code file.
+} 
+>> >> {Error using nargin
+You can only call nargin/nargout from within a MATLAB function.
+} 
+>> >> >>  current directory is:  /home/research/g.dehghanpoor/libraries/Sparse_BSOS-master/SDPT3-4.0_modified_by_KCT
+>> >> >> >> >> >> >> >> >> >> >> >> >> >> >> 
+ Now compiling the mexFunctions in:
+>>  /home/research/g.dehghanpoor/libraries/Sparse_BSOS-master/SDPT3-4.0_modified_by_KCT/Solver/Mexfun
+>> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> 
+existmex =
+
+     3
+
+{Undefined function or variable 'cmd'.
+} 
+>> >> >> >>     function cmd(s) 
+    |
+{Error: Function definition not supported in this context. Create functions in
+code file.
+} 
+>> >> {Undefined function or variable 's'.
+} 
+>> {Undefined function or variable 's'.
+} 
+>> >> 

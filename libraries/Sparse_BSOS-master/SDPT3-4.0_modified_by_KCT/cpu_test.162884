@@ -1,0 +1,136 @@
+MATLAB is selecting SOFTWARE OPENGL rendering.
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2018 The MathWorks, Inc.
+                   R2018a (9.4.0.813654) 64-bit (glnxa64)
+                             February 23, 2018
+
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>>  current directory is:  /home/research/g.dehghanpoor/libraries/Sparse_BSOS-master/SDPT3-4.0_modified_by_KCT
+
+ Now compiling the mexFunctions in:
+ /home/research/g.dehghanpoor/libraries/Sparse_BSOS-master/SDPT3-4.0_modified_by_KCT/Solver/Mexfun
+
+existmex =
+
+     3
+
+ mex  -O -largeArrayDims  mexProd2.c
+Building with 'gcc'.
+MEX completed successfully.
+
+existmex =
+
+     3
+
+ mex  -O -largeArrayDims  mexProd2nz.c
+Building with 'gcc'.
+MEX completed successfully.
+
+existmex =
+
+     3
+
+ mex  -O -largeArrayDims  mexinprod.c
+Building with 'gcc'.
+MEX completed successfully.
+
+existmex =
+
+     3
+
+ mex  -O -largeArrayDims  mexmat.c
+Building with 'gcc'.
+MEX completed successfully.
+
+existmex =
+
+     3
+
+ mex  -O -largeArrayDims  mexsmat.c
+Building with 'gcc'.
+MEX completed successfully.
+
+existmex =
+
+     3
+
+ mex  -O -largeArrayDims  mexsvec.c
+Building with 'gcc'.
+MEX completed successfully.
+
+existmex =
+
+     3
+
+ mex  -O -largeArrayDims  mexschur.c
+Building with 'gcc'.
+MEX completed successfully.
+
+existmex =
+
+     3
+
+ mex  -O -largeArrayDims  mexqops.c
+Building with 'gcc'.
+MEX completed successfully.
+
+existmex =
+
+     3
+
+ mex  -O -largeArrayDims  mexexpand.c
+Building with 'gcc'.
+MEX completed successfully.
+
+existmex =
+
+     3
+
+ mex  -O -largeArrayDims  mexskron.c
+Building with 'gcc'.
+MEX completed successfully.
+
+existmex =
+
+     3
+
+ mex  -O -largeArrayDims  mexnnz.c
+Building with 'gcc'.
+MEX completed successfully.
+
+existmex =
+
+     3
+
+ mex  -O -largeArrayDims  mexschurfun.c
+Building with 'gcc'.
+MEX completed successfully.
+
+existmex =
+
+     3
+
+ mex  -O -largeArrayDims  mexMatvec.c
+Building with 'gcc'.
+MEX completed successfully.
+
+existmex =
+
+     3
+
+ mex  -O -largeArrayDims  mextriang.c
+Building with 'gcc'.
+MEX completed successfully.
+
+existmex =
+
+     3
+
+ mex  -O -largeArrayDims  mextriangsp.c
+Building with 'gcc'.
+MEX completed successfully.
+>> 

@@ -1,0 +1,8 @@
+#BSUB -o cpujobtmp_%J.res
+
+#BSUB -q "juba"
+#BSUB -R '(!gpu)'
+#BSUB -J shapeSegmentation
+
+matlab -nojvm
+/project/engineering/matlab/latest/bin/matlab < tmp.m
