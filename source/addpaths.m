@@ -1,7 +1,7 @@
 local = 1;
 
 if local == 1
-    setenv('MOSEKLM_LICENSE_FILE', '../license/mosek.lic');
+    setenv('MOSEKLM_LICENSE_FILE', '../licenses/mosek.lic');
 
     addpath(genpath('../libraries/HausdorffDist'));
     addpath(genpath('../libraries/mosek/9.3/toolbox'));

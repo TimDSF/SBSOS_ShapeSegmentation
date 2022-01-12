@@ -1,6 +1,7 @@
 %% initialization
 addpaths;
 clear; clc;
+rng(1);
 
 %% parameters
 % input_file = 'images/aircraft_1.png';
@@ -15,7 +16,7 @@ hausdorff_lowerbound = 0.1;
 hausdorff_upperbound = 0.5;
 iterations = 1;
 
-invariant_enable = false;
+enable_invariant = false;
 cluster_variance = true;
 
 dists = zeros(1, iterations);
@@ -39,7 +40,7 @@ for i = 1:iterations
     fprintf("\n--------------------------------");
     fprintf("\n[MAIN]: running on example " + i + "\n");
 
-    if size(samples{1}, 2) >= 3 && size(samples{2}, 2) >= 3 && invariant_enable
+    if size(samples{1}, 2) >= 3 && size(samples{2}, 2) >= 3 && enable_invariant
         invariants = find_invariants(samples, num_monomials, invariant_bound, 0);
     else
         invariants = zeros(num_monomials);

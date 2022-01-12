@@ -2,6 +2,14 @@ function [coeffs, boundary_picked] = find_coefficients_var(boundary_segments, in
     fprintf("\n[COEFFICIENTS]: setting up problem\n");
     t0 = tic;
 
+    %% sampling
+    boundary_clusters = cluster_neighbors(boundary_segments, cluster_size); % boundary clusters
+    
+    clusters_sizes = cell2mat(cellfun(@size, boundary_clusters, 'UniformOutput', false)); % size of each cluster
+    clusters_picked = randsample(find(clusters_sizes(:, 1) == repmat(cluster_size, size(clusters_sizes, 1), 1)), num_picked_clusters, false); % clusters picked among those with full size
+    boundary_picked = cell2mat(boundary_clusters(clusters_picked));
+    num_picked = num_picked_clusters * cluster_size;
+
     %% preparation
     syms x y % declaring the symbols
     
@@ -10,20 +18,12 @@ function [coeffs, boundary_picked] = find_coefficients_var(boundary_segments, in
     grad_y = diff(monomials, y);
     num_monomials = size(monomials, 1); % number of monomials
     
-    boundary_clusters = cluster_neighbors(boundary_segments, cluster_size); % boundary clusters
-    
-    clusters_sizes = cell2mat(cellfun(@size, boundary_clusters, 'UniformOutput', false)); % size of each cluster
-    clusters_picked = randsample(find(clusters_sizes(:, 1) == repmat(cluster_size, size(clusters_sizes, 1), 1)), num_picked_clusters, false); % clusters picked among those with full size
-    boundary_picked = cell2mat(boundary_clusters(clusters_picked));
-    num_picked = num_picked_clusters * cluster_size;
-    
     num_variables =   num_monomials ... % polynomial coefficients
                     + num_picked ... % weights for picked clusters
                     + 1; % epsilon
                     % the exact definition of the variables follows this order
     num_dimension = num_variables + 1; % constant term
-    
-    
+
     %% building F
     pop.F = zeros(1, num_dimension); % zero-initialization
     
@@ -188,8 +188,15 @@ function [coeffs, boundary_picked] = find_coefficients_var(boundary_segments, in
     end
     
     %% specifying parameters
+
+    mk = max(sum(pop.F, 2) - pop.F(:, num_dimension));
+    for i = 1:num_ineq
+        mk = max(mk, max(sum(pop.G{i}, 2) - pop.G{i}(:, num_dimension)));
+    end
+    disp("  => max_degree: " + mk);
+
     pop.n = num_variables;
-    pop.k = 1;
+    pop.k = ceil(mk / 2);
     pop.d = 2; % 2
     pop.I = cell(1, num_picked_clusters + 1);
     pop.I{1} = [1:num_monomials, num_variables];
@@ -214,7 +221,11 @@ function [coeffs, boundary_picked] = find_coefficients_var(boundary_segments, in
             return
         end
     end
+
+
     fprintf("  => time: " + toc(t0) + "\n");
+
+    save('pop.mat', "pop");
 
     %%
 %     pop.I = {1:num_variables};
@@ -242,7 +253,7 @@ function [coeffs, boundary_picked] = find_coefficients_var(boundary_segments, in
         [rcode, msg] = mosekopt('minimize echo(0)', sdp2);
         fprintf("  => time: " + toc(t0) + "\n");
 
-        fprintf("[COEFFICIENTS]: error code: " + rcode + ', ' + msg.sol.itr.prosta + "\n");
+        fprintf("[COEFFICIENTS]: error code: " + rcode + ', ' + msg.rcodestr + "\n");
     end
 
     %% recovering the results
