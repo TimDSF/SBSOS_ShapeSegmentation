@@ -1,8 +1,8 @@
-#BSUB -o cpujob_%J.res
+#BSUB -o res/cpujob_%J.res
 
 #BSUB -q "juba"
 #BSUB -R '(!gpu)'
 #BSUB -J shapeSegmentation
 
 matlab -nojvm
-/project/engineering/matlab/latest/bin/matlab < run_iterate.m
+matlab < run_iterate.m

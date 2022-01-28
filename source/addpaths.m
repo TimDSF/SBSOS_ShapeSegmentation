@@ -1,6 +1,6 @@
-local = 1;
+local = true;
 
-if local == 1
+if local
     setenv('MOSEKLM_LICENSE_FILE', '../licenses/mosek.lic');
 
     addpath(genpath('../libraries/HausdorffDist'));
@@ -11,7 +11,7 @@ if local == 1
     addpath(genpath('../libraries/Sparse_BSOS-master'));
 
 else
-    setenv('MOSEKLM_LICENSE_FILE', '../mosek/mosek.lic');
+    setenv('MOSEKLM_LICENSE_FILE', '../licences/mosek.lic');
 
     addpath(genpath('../libraries/HausdorffDist'));
     addpath(genpath('../libraries/mosek/9.3/toolbox'));

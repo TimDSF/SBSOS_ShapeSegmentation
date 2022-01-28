@@ -1,5 +1,5 @@
-function roots = function_roots(coeffs, monomials)
-    f = fimplicit(dot(coeffs, monomials));
+function roots = function_roots(func)
+    f = fimplicit(func);
     set(gca, 'YTick', [], 'XTick', []);
     pbaspect([1 1 1]);
 
@@ -32,7 +32,7 @@ function roots = function_roots(coeffs, monomials)
     
     %%
     [n, m] = size(fig);
-    fig(fig > 100) = 0;
+    fig(fig > 150) = 0;
     
     [y, x] = find(fig);
     roots = [x / n * (xhigh - xlow) + xlow, - (y / m * (yhigh - ylow) + ylow)];

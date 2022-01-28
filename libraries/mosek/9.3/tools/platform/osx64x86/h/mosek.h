@@ -4,7 +4,7 @@
 /******************************************************************************
  ** Module : mosek.h
  **
- ** Generated 2021
+ ** Generated 2022
  **
  ** Copyright (c) MOSEK ApS, Denmark.
  **
@@ -23,7 +23,7 @@
 
 #define MSK_VERSION_MAJOR    9
 #define MSK_VERSION_MINOR    3
-#define MSK_VERSION_REVISION 9
+#define MSK_VERSION_REVISION 12
 #define MSK_VERSION_STATE    ""
 
 #define MSK_INFINITY 1.0e30

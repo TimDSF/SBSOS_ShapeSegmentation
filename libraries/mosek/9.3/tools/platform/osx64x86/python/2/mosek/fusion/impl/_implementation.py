@@ -4101,7 +4101,7 @@ def __mk_mosek_fusion_Model():
    self.__parameters = (None if (((m.__parameters) is None) ) else numpy.array([((m.__parameters)[_4]._clone_Lmosek_4fusion_4Model_2(_0) if (((m.__parameters)[_4] is not None) ) else None) for _4 in range(0,int(((m.__parameters)).shape[0]))], dtype=numpy.dtype(object)))
    self.__par_map = (m.__par_map)._clone_()
    self.__param_num = (m.__param_num)
-   self.__param_value = mosek.fusion.Utils.Tools._arraycopy__3D((m.__param_value))
+   self.__param_value = (mosek.fusion.Utils.Tools._arraycopy__3D((m.__param_value)) if (((m.__param_value) is not None) ) else None)
    self.__natconmap_codenztop = (m.__natconmap_codenztop)
    self.__natconmap_codeatomtop = (m.__natconmap_codeatomtop)
    self.__natconmap_numparameterized = (m.__natconmap_numparameterized)
@@ -4360,7 +4360,7 @@ def __mk_mosek_fusion_Model():
   def __natconmap_1codealloc_II(self,_0,_1):
    _2=(_0 + self.__natconmap_codenztop)
    _3=(_1 + self.__natconmap_codeatomtop)
-   if (_2 > int((self.__natconmap_codenidx).shape[0])): # src/fusion/Model.mbi:4232:12-44
+   if (((_2 + 1) > int((self.__natconmap_codeptr).shape[0])) or (_2 > int((self.__natconmap_codenidx).shape[0]))): # src/fusion/Model.mbi:4232:12-81
     if (_2 < (2 * int((self.__natconmap_codenidx).shape[0]))): # src/fusion/Model.mbi:4233:14-48
      _2 = (2 * int((self.__natconmap_codenidx).shape[0]))
     _4=self.__natconmap_codenidx
@@ -4369,7 +4369,7 @@ def __mk_mosek_fusion_Model():
     mosek.fusion.Utils.Tools._arraycopy__3JI_3JII(_4,0,self.__natconmap_codenidx,0,int((_4).shape[0]))
     self.__natconmap_codeptr = numpy.zeros(((_2 + 1),), dtype=numpy.dtype(numpy.int32))
     mosek.fusion.Utils.Tools._arraycopy__3II_3III(_5,0,self.__natconmap_codeptr,0,int((_5).shape[0]))
-   if (_3 > int((self.__natconmap_code).shape[0])): # src/fusion/Model.mbi:4240:12-46
+   if (((_3 + 1) > int((self.__natconmap_cconst).shape[0])) or (_3 > int((self.__natconmap_code).shape[0]))): # src/fusion/Model.mbi:4240:12-88
     if (_3 < (2 * int((self.__natconmap_code).shape[0]))): # src/fusion/Model.mbi:4241:14-50
      _3 = (2 * int((self.__natconmap_code).shape[0]))
     _6=self.__natconmap_code

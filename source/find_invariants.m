@@ -41,7 +41,7 @@ function [X] = find_invariants(samples, num_monomials, eps, display)
     [rcode, res] = mosekopt('minimize echo(0)', prob);
     fprintf("  => time: " + toc(t0) + "\n");
 
-    fprintf("[INVARIANTS]: error code: " + rcode + ', ' + msg.sol.itr.prosta + "\n");
+    fprintf("[INVARIANTS]: error code: " + rcode + ', ' + res.sol.itr.prosta + "\n");
     
     %% Retrieve the result assuming primal and dual feasible
     X = zeros(num_monomials);

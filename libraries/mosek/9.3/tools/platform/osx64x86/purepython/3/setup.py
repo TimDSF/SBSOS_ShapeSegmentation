@@ -70,7 +70,7 @@ class install(distutils.command.install.install):
 
 setup( name             = 'Mosek',
        cmdclass         = { 'install' : install },
-       version          = '9.3.9',
+       version          = '9.3.12',
        description      = 'Mosek/Python APIs',
        long_description = 'Interface for MOSEK',
        author           = 'Mosek ApS',

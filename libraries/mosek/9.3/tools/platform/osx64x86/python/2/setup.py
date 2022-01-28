@@ -176,7 +176,7 @@ MOSEK requires a license. Free of charge trial licenses as well as licenses for 
 
 def runsetup():
     setup( name             = 'Mosek', 
-           version          = '9.3.9',
+           version          = '9.3.12',
            #install_requires = ['numpy'],
            packages         = [ 'mosek', 'mosek.fusion','mosek.fusion.impl' ],
            ext_modules      = [ Extension('mosek._msk',

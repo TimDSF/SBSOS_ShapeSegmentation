@@ -5,19 +5,18 @@ rng(1);
 
 %% parameters
 % input_file = 'images/aircraft_1.png';
-% input_file = 'images/lip.png';
-input_file = 'images/circle.png';
-degree_poly = 2; % 6
-num_picked_clusters = 3;
+input_file = 'images/lip.png';
+% input_file = 'images/circle.png';
+degree_poly = 4; % 6
+num_picked_clusters = 2;
 cluster_size = 10;
-gradient_bound = 0.10;
+gradient_bound = 0.15;
 invariant_bound = 0.50;
-hausdorff_lowerbound = 0.1;
+hausdorff_lowerbound = 0.15;
 hausdorff_upperbound = 0.5;
-iterations = 1;
+iterations = 10;
 
 enable_invariant = false;
-cluster_variance = true;
 
 dists = zeros(1, iterations);
 
@@ -40,14 +39,14 @@ for i = 1:iterations
     fprintf("\n--------------------------------");
     fprintf("\n[MAIN]: running on example " + i + "\n");
 
-    if size(samples{1}, 2) >= 3 && size(samples{2}, 2) >= 3 && enable_invariant
+    if size(samples{2}, 2) >= 3 && enable_invariant
         invariants = find_invariants(samples, num_monomials, invariant_bound, 0);
     else
         invariants = zeros(num_monomials);
     end
     
     %%
-    if cluster_variance
+    if enable_invariant
         [coeffs, boundary_picked] = find_coefficients_var(boundary_segments, invariants, degree_poly, num_picked_clusters, cluster_size, gradient_bound, invariant_bound, "mosek", 0);
     else
         [coeffs, boundary_picked] = find_coefficients(boundary_segments, degree_poly, num_picked_clusters, cluster_size, gradient_bound, "mosek", 0);
@@ -55,7 +54,7 @@ for i = 1:iterations
     coeffs = coeffs / norm(coeffs);
     
     %%
-    roots = function_roots(coeffs, monomials);
+    roots = function_roots(dot(coeffs, monomials));
     if size(roots, 1) == 0
         dists(i) = 100;
     else
@@ -87,13 +86,25 @@ for i = 1:iterations
         fprintf("\n[MAIN]: undetermined example\n");
 %         savefig("./res/" + i);
     end
+    fprintf("\n[MAIN]: samples count: [%d / %d]\n", size(samples{1}, 2), size(samples{2}, 2));
 end
 
-%%
+%% save results
+close;
+
 save("_samples.mat", "samples");
+
+hold on;
+plot(dists);
+xlim([0 iterations]); ylim([0 5]); pbaspect([2 1 1]);
+plot(hausdorff_lowerbound * ones(1, iterations));
+plot(hausdorff_upperbound * ones(1, iterations));
+hold off;
+savefig("degree" + degree_poly);
+
 return;
 
-%% helper
+%% helper: 1
 for i = 1:size(samples{1}, 2)
     hold on;
     f = fimplicit(dot(samples{1}(:, i), monomials)); f.Color = 'b';
@@ -107,8 +118,7 @@ end
 
 for i = 1:size(samples{2}, 2)
     hold on;
-    f = fimplicit(dot(samples{2}(:, i), monomials));
-    f.Color = 'r';
+    f = fimplicit(dot(samples{2}(:, i), monomials)); f.Color = 'r';
     scatter(boundary_set(:, 1), boundary_set(:, 2), '.', 'black');
     pbaspect([1 1 1]);
     axis([-1.1 1.1 -1.1 1.1]); 
@@ -116,3 +126,9 @@ for i = 1:size(samples{2}, 2)
     pause;
     close;
 end
+
+%% helper: 2
+load("_samples.mat", "samples");
+samples{1} = samples{1}(:, 1:3);
+samples{2} = ones(num_monomials, 0);
+save("_samples.mat", "samples");

@@ -194,12 +194,14 @@ if platform.system() == 'Windows':
             'mosek/_msk.cp36-'+pfname+pyextsuffix,
             'mosek/_msk.cp37-'+pfname+pyextsuffix,
             'mosek/_msk.cp38-'+pfname+pyextsuffix,
-            'mosek/_msk.cp39-'+pfname+pyextsuffix ]
+            'mosek/_msk.cp39-'+pfname+pyextsuffix,
+            'mosek/_msk.cp310-'+pfname+pyextsuffix, ]
         fragmentssources = [
             'mosek/fusion/impl/fragments.cp36-'+pfname+pyextsuffix,
             'mosek/fusion/impl/fragments.cp37-'+pfname+pyextsuffix,
             'mosek/fusion/impl/fragments.cp38-'+pfname+pyextsuffix,
-            'mosek/fusion/impl/fragments.cp39-'+pfname+pyextsuffix ]            
+            'mosek/fusion/impl/fragments.cp39-'+pfname+pyextsuffix,
+            'mosek/fusion/impl/fragments.cp310-'+pfname+pyextsuffix ]            
     if pfname == 'win32':
         msksources = [
             'mosek/_msk.cp36-'+pfname+pyextsuffix,
@@ -221,7 +223,7 @@ MOSEK requires a license. Free of charge trial licenses as well as licenses for 
     
 def runsetup():
     setup( name             = 'Mosek', 
-           version          = '9.3.9',
+           version          = '9.3.12',
            #install_requires = ['numpy'],
            packages         = [ 'mosek', 'mosek.fusion','mosek.fusion.impl' ],
            ext_modules      = [ Extension('mosek._msk',

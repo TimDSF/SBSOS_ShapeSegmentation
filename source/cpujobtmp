@@ -5,4 +5,4 @@
 #BSUB -J shapeSegmentation
 
 matlab -nojvm
-/project/engineering/matlab/latest/bin/matlab < tmp.m
+matlab < tmp.m
