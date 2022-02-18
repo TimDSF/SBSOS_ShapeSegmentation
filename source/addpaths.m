@@ -11,7 +11,7 @@ if local
     addpath(genpath('../libraries/Sparse_BSOS-master'));
 
 else
-    setenv('MOSEKLM_LICENSE_FILE', '../licences/mosek.lic');
+    setenv('MOSEKLM_LICENSE_FILE', '../licenses/mosek.lic');
 
     addpath(genpath('../libraries/HausdorffDist'));
     addpath(genpath('../libraries/mosek/9.3/toolbox'));

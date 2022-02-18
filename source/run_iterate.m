@@ -5,8 +5,8 @@ rng(1);
 
 %% parameters
 % input_file = 'images/aircraft_1.png';
-input_file = 'images/lip.png';
-% input_file = 'images/circle.png';
+% input_file = 'images/lip.png';
+input_file = 'images/circle.png';
 degree_poly = 4; % 6
 num_picked_clusters = 2;
 cluster_size = 10;
@@ -16,8 +16,9 @@ invariant_bound = 0.50; % 1
 hausdorff_lowerbound = 0.1;
 hausdorff_upperbound = 0.5;
 iterations = 4;
+solver = "mosek";
 
-enable_invariant = false;
+enable_invariant = true;
 
 dists = zeros(1, iterations);
 
@@ -43,16 +44,13 @@ for i = 1:iterations
 
     if size(samples{2}, 2) >= 3 && enable_invariant
         invariants = find_invariants(samples, num_monomials, invariant_bound, 0);
+        [coeffs, boundary_picked] = find_coefficients_var(boundary_segments, invariants, degree_poly, num_picked_clusters, cluster_size, cluster_sparsity, gradient_bound, invariant_bound, solver, 0);
+        fprintf("\n[MAIN]: Invariant: " + trace(coeffs * coeffs' * invariants) + "\n");
     else
-        invariants = zeros(num_monomials);
+        [coeffs, boundary_picked] = find_coefficients(boundary_segments, degree_poly, num_picked_clusters, cluster_size, cluster_sparsity, gradient_bound,solver, 0);
     end
-    
-    %%
-    if enable_invariant
-        [coeffs, boundary_picked] = find_coefficients_var(boundary_segments, invariants, degree_poly, num_picked_clusters, cluster_size, cluster_sparsity, gradient_bound, invariant_bound, "mosek", 0);
-    else
-        [coeffs, boundary_picked] = find_coefficients(boundary_segments, degree_poly, num_picked_clusters, cluster_size, cluster_sparsity, gradient_bound, "mosek", 0);
-    end
+
+    fprintf("  => norm: " + norm(coeffs)+"\n");
     coeffs = coeffs / norm(coeffs);
     
     %%
@@ -63,7 +61,6 @@ for i = 1:iterations
         dists(i) = HausdorffDist(boundary_set, roots);
     end
     fprintf("\n[MAIN]: Hausdoff Distance: " + dists(i));
-    fprintf("\n[MAIN]: Invariant: " + trace(coeffs * coeffs' * invariants));
 
     %% plot results
     hold on;
@@ -106,7 +103,7 @@ xlim([0 iterations]); ylim([0 5]); pbaspect([2 1 1]);
 plot(hausdorff_lowerbound * ones(1, iterations));
 plot(hausdorff_upperbound * ones(1, iterations));
 hold off;
-savefig("degree" + degree_poly);
+savefig("res/dists");
 
 return;
 
