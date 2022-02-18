@@ -1,17 +1,18 @@
-function [coeffs, boundary_picked] = find_coefficients_var(boundary_segments, invariants, degree_poly, num_picked_clusters, cluster_size, gradient_bound, invariant_bound, solver, display)
+function [coeffs, boundary_picked] = find_coefficients_var(boundary_segments, invariants, degree_poly, num_picked_clusters, cluster_size, cluster_sparsity, gradient_bound, invariant_bound, solver, display)
     fprintf("\n[COEFFICIENTS]: setting up problem\n");
     t0 = tic;
 
     %% sampling
-    boundary_clusters = cluster_neighbors(boundary_segments, cluster_size); % boundary clusters
+    cluster_length = cluster_size * cluster_sparsity;
+    boundary_clusters = cluster_neighbors(boundary_segments, cluster_length); % boundary clusters
     
     clusters_sizes = cell2mat(cellfun(@size, boundary_clusters, 'UniformOutput', false)); % size of each cluster
-    clusters_picked = randsample(find(clusters_sizes(:, 1) == repmat(cluster_size, size(clusters_sizes, 1), 1)), num_picked_clusters, false); % clusters picked among those with full size
-    boundary_picked = cell2mat(boundary_clusters(clusters_picked));
+    clusters_picked = randsample(find(clusters_sizes(:, 1) == repmat(cluster_length, size(clusters_sizes, 1), 1)), num_picked_clusters, false); % clusters picked among those with full size
     num_picked = num_picked_clusters * cluster_size;
+    boundary_picked = cell2mat(boundary_clusters(clusters_picked)); boundary_picked = boundary_picked((1:num_picked) * cluster_sparsity, :);
 
     %% preparation
-    syms x y % declaring the symbols
+    syms x y; % declaring the symbols
     
     monomials = monomials_gen([x;y], 0:degree_poly); % generate the monomials vector
     grad_x = diff(monomials, x);
@@ -198,6 +199,7 @@ function [coeffs, boundary_picked] = find_coefficients_var(boundary_segments, in
     pop.n = num_variables;
     pop.k = ceil(mk / 2);
     pop.d = 2; % 2
+    
     pop.I = cell(1, num_picked_clusters + 1);
     pop.I{1} = [1:num_monomials, num_variables];
     for i = 1:num_picked_clusters
@@ -222,14 +224,12 @@ function [coeffs, boundary_picked] = find_coefficients_var(boundary_segments, in
         end
     end
 
+%     pop.I = {1:num_variables};
+%     pop.J = {1:num_ineq};
 
     fprintf("  => time: " + toc(t0) + "\n");
 
-    save('pop.mat', "pop");
-
-    %%
-%     pop.I = {1:num_variables};
-%     pop.J = {1:num_ineq};
+%     save('pop.mat', "pop");
     
     %% creating the program
     fprintf("[COEFFICIENTS]: generating SBSOS\n");

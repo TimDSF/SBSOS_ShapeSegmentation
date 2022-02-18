@@ -5,10 +5,10 @@ rng(1);
 
 %% parameters
 % input_file = 'images/aircraft_1.png';
-input_file = 'images/lip.png';
-% input_file = 'images/circle.png';
-degree_poly = 4; % 6
-num_picked_clusters = 2;
+% input_file = 'images/lip.png';
+input_file = 'images/circle.png';
+degree_poly = 2; % 6
+num_picked_clusters = 5;
 cluster_size = 10;
 cluster_sparsity = 2;
 gradient_bound = 0.15; % 0.05
@@ -17,7 +17,7 @@ hausdorff_lowerbound = 0.1;
 hausdorff_upperbound = 0.5;
 iterations = 4;
 
-enable_invariant = false;
+enable_invariant = true;
 
 dists = zeros(1, iterations);
 
